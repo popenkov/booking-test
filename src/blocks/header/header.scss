@@ -1,0 +1,12 @@
+@use "../../scss/breakpoints";
+
+.header {
+  $block-name: &; // #{$block-name}__element
+
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+
+  &__user-link {
+  }
+}

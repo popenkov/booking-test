@@ -1,0 +1,26 @@
+//- Все примеси в этом файле должны начинаться c имени блока (header)
+//- Упоминание имени блока в классах обязательно, без этого он не попадёт
+//- в сборку
+
+mixin header(mods)
+
+  //- Принимает:
+  //-   mods    {string} - список модификаторов
+  //- Вызов:
+        +header("Текст", "some-mod")
+
+  //- список модификаторов
+  -
+    var allMods = "";
+    if (typeof (mods) !== "undefined" && mods) {
+      var modsList = mods.split(",");
+      for (var i = 0; i < modsList.length; i++) {
+        allMods = allMods + " header--" + modsList[i].trim();
+      }
+    }
+
+  header.header(class=allMods)&attributes(attributes)
+    button.header__menu-button.menu-button.js-menu-button
+      svg.menu-button__icon: use(href= path.icon + "icon__menu")
+    a.header__user-link.user-link(href="#") АК
+

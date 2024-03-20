@@ -1,0 +1,27 @@
+//- Все примеси в этом файле должны начинаться c имени блока (aside)
+//- Упоминание имени блока в классах обязательно, без этого он не попадёт
+//- в сборку
+
+mixin aside(mods)
+
+  //- Принимает:
+  //-   mods    {string} - список модификаторов
+  //- Вызов:
+        +aside("some-mod")
+
+  //- список модификаторов
+  -
+    var allMods = "";
+    if (typeof (mods) !== "undefined" && mods) {
+      var modsList = mods.split(",");
+      for (var i = 0; i < modsList.length; i++) {
+        allMods = allMods + " aside--" + modsList[i].trim();
+      }
+    }
+
+  .aside(class=allMods)&attributes(attributes)
+    .aside__page-title
+    .aside__inner
+      a.aside__link(href="#")
+        svg.aside__link-icon: use(href= path.icon + "icon__exchange")
+        | Покупка билетов

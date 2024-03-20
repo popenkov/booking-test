@@ -1,0 +1,5 @@
+@use "mixins/font-face";
+
+@include font-face.ff("Roboto", "Roboto-Light", 300);
+@include font-face.ff("Roboto", "Roboto-Regular");
+@include font-face.ff("Roboto", "Roboto-Medium", 500);

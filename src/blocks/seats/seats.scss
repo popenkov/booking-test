@@ -1,0 +1,17 @@
+@use "../../scss/breakpoints";
+
+.seats {
+  $block-name: &; // #{$block-name}__element
+  position: relative;
+  overflow: auto;
+
+  border: 1px solid rgb(155, 155, 155);
+  background: rgb(249, 249, 249);
+
+  &__inner {
+  }
+  &__controls {
+    position: relative;
+    z-index: 2;
+  }
+}

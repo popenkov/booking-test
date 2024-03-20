@@ -1,0 +1,21 @@
+@use "../../scss/breakpoints";
+
+.menu-button {
+  $block-name: &; // #{$block-name}__element
+
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+    color: var(--front-primary);
+    transition: color 0.2s ease-in;
+
+    &:hover {
+      color: var(--gray-500);
+    }
+  }
+}

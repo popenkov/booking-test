@@ -1,0 +1,42 @@
+//- Library page template
+
+include mixins.pug
+
+- var isMainPage = false
+- var pageTitle = "title"
+- var metaDescription = "description"
+- var metaKeywords = "keywords"
+- var json = locals
+- var path = pugPaths
+- var isNav = nav
+- var isLibrary = library
+
+block variables
+
+doctype html
+html(class="no-js", lang="ru")
+  include ../../templates/template__default-head.pug
+
+  body
+    noscript У вас отключен JavaScript. Это пугает.
+
+    if isNav
+      include ../../service/project-nav.pug
+
+    if isLibrary
+      include ../blocks/library-trigger/library-trigger.pug
+
+    .page
+      .page__header
+        +library-header
+      .page__main
+        block content
+          .content-filler content-filler
+      .page__footer
+        +library-footer
+
+    block templates
+
+    script(src= path.js + "bundle.js")
+
+    block scripts

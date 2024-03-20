@@ -1,0 +1,8 @@
+@use "../breakpoints";
+@use "fluid";
+
+@mixin body {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+}

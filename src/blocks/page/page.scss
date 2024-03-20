@@ -1,0 +1,18 @@
+@use "../../scss/breakpoints";
+
+.page {
+  $block-name: &; // #{$block-name}__element
+
+  display: grid;
+  grid-template-areas: "sidebar center";
+  grid-template-columns: 260px 1fr;
+
+  &__header {
+  }
+
+  &__main {
+  }
+
+  &__footer {
+  }
+}
