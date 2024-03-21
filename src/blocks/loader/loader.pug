@@ -1,13 +1,13 @@
-//- Все примеси в этом файле должны начинаться c имени блока (aside)
+//- Все примеси в этом файле должны начинаться c имени блока (loader)
 //- Упоминание имени блока в классах обязательно, без этого он не попадёт
 //- в сборку
 
-mixin aside(mods)
+mixin loader(mods)
 
   //- Принимает:
   //-   mods    {string} - список модификаторов
   //- Вызов:
-        +aside("some-mod")
+        +loader("some-mod")
 
   //- список модификаторов
   -
@@ -15,11 +15,10 @@ mixin aside(mods)
     if (typeof (mods) !== "undefined" && mods) {
       var modsList = mods.split(",");
       for (var i = 0; i < modsList.length; i++) {
-        allMods = allMods + " aside--" + modsList[i].trim();
+        allMods = allMods + " loader--" + modsList[i].trim();
       }
     }
 
-  .aside(class=allMods)&attributes(attributes)
-    a.aside__link(href="#")
-      svg.aside__link-icon: use(href= path.icon + "icon__exchange")
-      | Покупка билетов
+  .loader(class=allMods)&attributes(attributes)
+    span
+    span

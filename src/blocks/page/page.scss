@@ -4,13 +4,29 @@
   $block-name: &; // #{$block-name}__element
 
   display: grid;
-  grid-template-areas: "sidebar center";
-  grid-template-columns: 260px 1fr;
+  grid-template-areas: "header header" "sidebar center";
+  grid-template-columns: var(--aside-width) 1fr;
+  gap: 20px 30px;
+
+  &__title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 33px;
+    letter-spacing: 0px;
+  }
+
+  &__title + &__content {
+    margin-top: 28px;
+  }
 
   &__header {
+    grid-area: header;
   }
 
   &__main {
+    margin-top: 11px;
+    margin-right: 30px;
   }
 
   &__footer {

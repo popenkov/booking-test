@@ -154,7 +154,9 @@ export const config = {
     // "somePackage/dist/somePackage.css", // for "node_modules/somePackage/dist/somePackage.css",
   ],
   // style imports at end
-  addStyleAfter: [],
+  // todo
+  // addStyleAfter: ["src/blocks/tooltip/tooltip.scss","src/blocks/filter-button/filter-button.scss"],
+  addStyleAfter: ["src/blocks/tooltip/tooltip.scss","src/blocks/filter-button/filter-button.scss","src/blocks/result-card/result-card.scss"],
   // js imports at start
   addJsBefore: [
     // "somePackage/dist/somePackage.js", // for "node_modules/somePackage/dist/somePackage.js",

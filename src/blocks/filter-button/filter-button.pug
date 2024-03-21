@@ -1,13 +1,13 @@
-//- Все примеси в этом файле должны начинаться c имени блока (aside)
+//- Все примеси в этом файле должны начинаться c имени блока (filter-button)
 //- Упоминание имени блока в классах обязательно, без этого он не попадёт
 //- в сборку
 
-mixin aside(mods)
+mixin filter-button(text, mods)
 
   //- Принимает:
   //-   mods    {string} - список модификаторов
   //- Вызов:
-        +aside("some-mod")
+        +filter-button("some-mod")
 
   //- список модификаторов
   -
@@ -15,11 +15,11 @@ mixin aside(mods)
     if (typeof (mods) !== "undefined" && mods) {
       var modsList = mods.split(",");
       for (var i = 0; i < modsList.length; i++) {
-        allMods = allMods + " aside--" + modsList[i].trim();
+        allMods = allMods + " filter-button--" + modsList[i].trim();
       }
     }
 
-  .aside(class=allMods)&attributes(attributes)
-    a.aside__link(href="#")
-      svg.aside__link-icon: use(href= path.icon + "icon__exchange")
-      | Покупка билетов
+  button.filter-button(class=allMods)&attributes(attributes)
+    span.filter-button__color
+    span.filter-button__text= text
+

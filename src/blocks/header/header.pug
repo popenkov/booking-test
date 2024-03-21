@@ -20,6 +20,7 @@ mixin header(mods)
     }
 
   header.header(class=allMods)&attributes(attributes)
+    .header__logo Схема площадки
     button.header__menu-button.menu-button.js-menu-button
       svg.menu-button__icon: use(href= path.icon + "icon__menu")
     a.header__user-link.user-link(href="#") АК

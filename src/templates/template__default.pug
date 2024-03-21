@@ -27,16 +27,14 @@ html(class="no-js", lang="ru")
       include ../library/blocks/library-trigger/library-trigger.pug
 
     .page
+      .page__header
+        +header
       aside.page__aside
         +aside
-      .page__center
-        .page__header
-          +header
-        .page__main
-          block content
-            .content-filler content-filler
-        .page__footer
-          +footer
+      .page__main
+        block content
+          .content-filler content-filler
+
 
     block templates
 

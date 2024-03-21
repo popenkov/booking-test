@@ -36,6 +36,7 @@ svg {
   outline: 0;
 }
 
-[hidden] {
-  display: none;
+[hidden],
+.hidden {
+  display: none !important;
 }

@@ -1,0 +1,43 @@
+@use "../../scss/breakpoints";
+
+.filter-button {
+  $block-name: &; // #{$block-name}__element
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 9px 29px 10px 13px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
+  background-color: var(--back-primary);
+
+  &:hover {
+    background-color: var(--gray-200);
+  }
+
+  &__color {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+  }
+
+  &.green {
+    #{$block-name}__color {
+      background-color: var(--green);
+    }
+  }
+
+  &.blue {
+    #{$block-name}__color {
+      background-color: var(--blue);
+    }
+  }
+
+  &__text {
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0px;
+  }
+}

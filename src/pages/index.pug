@@ -2,37 +2,119 @@ extends ../templates/template__default.pug
 
 block variables
   - isMainPage = false
-  - pageTitle = "Start page"
+  - pageTitle = "Покупка билетов"
   - metaDescription = "description"
   - metaKeywords = "keywords"
 
 block content
-  .container
-
-    .seats
+    h1.page__title Покупка билетов
+    .page__content.seats.js-seats-page
+      .seats__filters.js-filters-container
+      +loader(class="seats__loader js-loader hidden")
       .seats__inner.js-seats-container(style="transform: matrix(1, 0, 0, 1, 0, 0)")
-        .seats__sector.js-sector
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-              <rect id="stage" x="450" y="850" width="100" height="100" fill="gray"/>
-              <g id="rows">
-                <g id="row1" class="row">
-                  <rect x="50" y="50" width="80" height="40" fill="green" class="place"/>
-                  <rect x="150" y="50" width="80" height="40" fill="green" class="place"/>
-                  <rect x="250" y="50" width="80" height="40" fill="green" class="place"/>
-                  <rect x="350" y="50" width="80" height="40" fill="green" class="place"/>
-                  <rect x="450" y="50" width="80" height="40" fill="green" class="place"/>
-                </g>
-                <g id="row2" class="row">
-                  <rect x="50" y="150" width="80" height="40" fill="green" class="place"/>
-                  <rect x="150" y="150" width="80" height="40" fill="green" class="place"/>
-                  <rect x="250" y="150" width="80" height="40" fill="green" class="place"/>
-                  <rect x="350" y="150" width="80" height="40" fill="green" class="place"/>
-                  <rect x="450" y="150" width="80" height="40" fill="green" class="place"/>
-                </g>
-              </g>
-            </svg>
+
+        .seats__sector.seats__sector--three.sector.js-sector(data-sector="3")
+          h2.sector__title Сектор 3
+          .sector__row
+            span.sector__row-name 1
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="1"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="2"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="3"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="4"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="5"/>
+            span.sector__row-name 1
+          .sector__row
+            span.sector__row-name 2
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="6"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="7"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="8"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="9"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="10"/>
+            span.sector__row-name 2
+
+        .seats__sector.seats__sector--four.sector.js-sector(data-sector="4")
+          h2.sector__title Сектор 4
+          .sector__row
+            span.sector__row-name 1
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="1"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="2"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="3"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="4"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="5"/>
+            span.sector__row-name 1
+          .sector__row
+            span.sector__row-name 2
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="6"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="7"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="8"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="9"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="4" data-place="10"/>
+            span.sector__row-name 2
+
+        .seats__arena
+          .seats__arena-inner
 
 
+
+        .seats__sector.seats__sector--one.sector.js-sector(data-sector="1")
+          h2.sector__title Сектор 1
+          .sector__row
+            span.sector__row-name 1
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="1"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="2"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="3"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="4"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="5"/>
+            span.sector__row-name 1
+          .sector__row
+            span.sector__row-name 2
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="6"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="7"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="8"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="9"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="1" data-place="10"/>
+            span.sector__row-name 2
+
+        .seats__sector.seats__sector--two.sector.js-sector(data-sector="2")
+          h2.sector__title Сектор 2
+          .sector__row
+            span.sector__row-name 1
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="1"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="2"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="3"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="4"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="5"/>
+            span.sector__row-name 1
+          .sector__row
+            span.sector__row-name 2
+            svg(viewBox="0 0 170 20" style="width: 170px; height: 20px")
+              g.sector__row-places
+                <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="6"/>
+                <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="7"/>
+                <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="8"/>
+                <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="9"/>
+                <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="2" data-place="10"/>
+            span.sector__row-name 2
+
+    .seats__result
+      .seats__result-cards.js-result-cards
+      span.seats__result-text.js-result-text
+      button.seats__result-button.button.js-submit-button Далее
     .seats__controls
-      button.js-plus-button +
-      button.js-minus-button -
+      button.seats__control.zoom-button.js-plus-button +
+      button.seats__control.zoom-button.js-minus-button -
+
