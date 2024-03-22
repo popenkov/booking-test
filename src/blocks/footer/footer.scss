@@ -1,9 +1,0 @@
-@use "../../scss/breakpoints";
-
-.footer {
-  $block-name: &; // #{$block-name}__element
-
-  &__inner {
-    padding: 8px 0;
-  }
-}

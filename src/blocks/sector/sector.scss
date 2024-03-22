@@ -9,10 +9,10 @@
 
   &__title {
     margin: 0;
-    font-size: 18px;
     font-weight: 400;
+    font-size: 18px;
     line-height: 21px;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
 
   &__row-svg {
@@ -23,8 +23,8 @@
 
   &__row {
     display: flex;
-    align-items: center;
     gap: 30px;
+    align-items: center;
   }
 
   &__title + &__row {
@@ -41,10 +41,10 @@
   }
 
   &__row-name {
-    font-size: 14px;
     font-weight: 400;
+    font-size: 14px;
     line-height: 16px;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
 
   &__place-hole {
@@ -53,14 +53,14 @@
   }
 
   &__place {
-    display: inline-block;
-    margin: 0 3px;
     position: relative;
+    display: inline-block;
     width: 10px;
     min-width: 10px;
     height: 10px;
-    border-radius: 50%;
+    margin: 0 3px;
     color: var(--gray-500);
+    border-radius: 50%;
     pointer-events: none;
 
     &.available {
@@ -69,12 +69,13 @@
     }
 
     &[data-color="green"] {
-      r: 10;
       color: var(--green);
-    }
-    &[data-color="blue"] {
       r: 10;
+    }
+
+    &[data-color="blue"] {
       color: var(--blue);
+      r: 10;
     }
 
     &.added {

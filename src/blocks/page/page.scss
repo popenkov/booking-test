@@ -10,10 +10,10 @@
 
   &__title {
     margin: 0;
-    font-size: 28px;
     font-weight: 300;
+    font-size: 28px;
     line-height: 33px;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
 
   &__title + &__content {
@@ -27,8 +27,5 @@
   &__main {
     margin-top: 11px;
     margin-right: 30px;
-  }
-
-  &__footer {
   }
 }

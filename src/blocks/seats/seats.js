@@ -70,7 +70,7 @@ ready(function () {
   document.addEventListener("mousemove", handleMouseMove);
 
   //  тултип при наведении
-  const generateTooltip = (data) => {
+  const generateTooltip = () => {
     const tooltip = document.createElement("div");
     tooltip.classList.add("tooltip");
     tooltip.innerHTML = `
@@ -243,7 +243,7 @@ ready(function () {
     resultText.innerHTML = `Вы выбрали ${ticketsAmount} ${ticketWord}: ${formattedPrice}`;
   };
   const generateResultCard = (data) => {
-    const { sector, place, price, color } = data;
+    const { sector, place, price } = data;
 
     const row = Number(place) <= 5 ? "1" : "2";
 
@@ -337,13 +337,34 @@ ready(function () {
     }
   });
 
+  const updateSoldPlaces = () => {
+    chosenPlaces.forEach((placeItem) => {
+      const { sector, place, price, color } = placeItem;
+
+      const placeElement = seatingChart.querySelector(
+        `.js-place[data-sector="${sector}"][data-place="${place}"]`,
+      );
+      placeElement.removeAttribute("data-color");
+      placeElement.classList.remove("available", "added");
+      const cardElement = resultCardsContainer.querySelector(
+        `.js-result-card[data-sector="${sector}"][data-place="${place}"]`,
+      );
+
+      handleRemoveCard(cardElement, placeElement);
+    });
+  };
+
   // отправка формы
   const handleFormSubmit = async () => {
     submitButton.setAttribute("disabled", true);
     showLoader();
     const response = await postData(chosenPlaces);
     alert(response);
-    window.location.reload();
+    updateSoldPlaces();
+    chosenPlaces = [];
+    hideResultPanel();
+    submitButton.removeAttribute("disabled");
+    hideLoader();
   };
 
   submitButton.addEventListener("click", handleFormSubmit);
