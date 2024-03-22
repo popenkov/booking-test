@@ -1,7 +1,8 @@
+import { addScrollPadding } from "../../js/utils/addScrollPadding.js";
 import { declOfNum } from "../../js/utils/declOfNumbers.js";
 import ready from "../../js/utils/documentReady.js";
 import { formatPrice } from "../../js/utils/formatPrice.js";
-import { AVAILABLE_PLACES, fetchData } from "./mockData.js";
+import { AVAILABLE_PLACES, fetchData, postData } from "./mockData.js";
 
 ready(function () {
   const seatsPage = document.querySelector(".js-seats-page");
@@ -9,6 +10,10 @@ ready(function () {
   if (!seatsPage) {
     return;
   }
+
+  let scale = 1;
+  const LEFT_PADDING = 20;
+  const TOP_PADDING = 20;
   let availablePlaces;
   let chosenPlaces = [];
 
@@ -19,13 +24,11 @@ ready(function () {
   const loader = document.querySelector(".js-loader");
   const resultCardsContainer = document.querySelector(".js-result-cards");
   const filterButtonsContainer = document.querySelector(".js-filters-container");
-
+  const resultsBlock = document.querySelector(".js-results-block");
   const resultText = document.querySelector(".js-result-text");
+  const submitButton = document.querySelector(".js-submit-button");
 
-  let scale = 1;
-  const LEFT_PADDING = 20;
-  const TOP_PADDING = 20;
-
+  //  масшабирование
   plusBtn.addEventListener("click", () => {
     scale += 0.1;
     seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, 0, 0)`;
@@ -38,22 +41,35 @@ ready(function () {
     }
   });
 
+  //  управление картой зала
+  let isGrabbing = false;
+
   function handleMouseMove(evt) {
     if (evt.buttons === 1) {
+      if (!isGrabbing) {
+        isGrabbing = true;
+        seatingChart.classList.add("draggable", "grabbing");
+      }
+
       const translateX = parseInt(seatingChart.style.transform.split(",")[4]) + evt.movementX;
       const translateY = parseInt(seatingChart.style.transform.split(",")[5]) + evt.movementY;
       seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`;
+    } else {
+      if (isGrabbing) {
+        isGrabbing = false;
+        seatingChart.classList.remove("grabbing");
+      }
+
+      seatingChart.classList.remove("draggable");
     }
   }
 
   document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", handleMouseMove);
 
-  document.addEventListener("click", (evt) => {
-    if (evt.target.closest(".place")) {
-      console.log("place", evt.target.closest(".js-place"));
-    }
-  });
+  document.addEventListener("mousemove", handleMouseMove);
 
+  //  тултип при наведении
   const generateTooltip = (data) => {
     const tooltip = document.createElement("div");
     tooltip.classList.add("tooltip");
@@ -64,24 +80,39 @@ ready(function () {
     return tooltip;
   };
 
+  function calculatePlacePosition(place, tooltipElement) {
+    const tooltipHeight = tooltipElement.offsetHeight;
+    const { left, top } = place.getBoundingClientRect();
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const placeTopWithScroll = top + scrollPosition;
+    const distanceToTop = placeTopWithScroll - tooltipHeight - 10;
+
+    if (distanceToTop < scrollPosition) {
+      tooltipElement.classList.add("tooltip--bottom");
+      return {
+        left: `${left - tooltipElement.offsetWidth / 2 + LEFT_PADDING}px`,
+        top: `${top + TOP_PADDING - scrollPosition}px`,
+      };
+    } else {
+      tooltipElement.classList.remove("tooltip--bottom");
+      return {
+        left: `${left - tooltipElement.offsetWidth / 2 + LEFT_PADDING}px`,
+        top: `${distanceToTop}px`,
+      };
+    }
+  }
+
   places.forEach((place) => {
     place.addEventListener("mouseover", () => {
-      const tooltip = generateTooltip(place);
-      document.body.appendChild(tooltip);
-      const { left, top, width: placeWidth } = place.getBoundingClientRect();
-      tooltip.style.left = `${left - tooltip.offsetWidth / 2 + LEFT_PADDING}px`;
-      const tooltipHeight = tooltip.offsetHeight;
+      const tooltipElement = generateTooltip(place);
+      document.body.appendChild(tooltipElement);
+      setTimeout(() => {
+        tooltipElement.style.opacity = 1;
+      }, 20);
 
-      const distanceToTop = top - tooltipHeight - 10;
-
-      // todo проверить скролл боди и добавить в Y
-
-      if (distanceToTop < 0) {
-        tooltip.style.top = `${top + TOP_PADDING}px`;
-        tooltip.classList.add("tooltip--bottom");
-      } else {
-        tooltip.style.top = `${distanceToTop}px`;
-      }
+      const position = calculatePlacePosition(place, tooltipElement);
+      tooltipElement.style.left = position.left;
+      tooltipElement.style.top = position.top;
     });
 
     place.addEventListener("mouseout", () => {
@@ -91,6 +122,8 @@ ready(function () {
       }
     });
   });
+
+  //  загрузка данных и отрисовка мест
 
   const showLoader = () => {
     seatingChart.classList.add("loading");
@@ -126,22 +159,6 @@ ready(function () {
     }
   };
 
-  const filterPlacesByPrice = (price) => {
-    const filteredPlaces = availablePlaces.filter((place) => place.price === price);
-    updateSeatsData(filteredPlaces);
-  };
-
-  const removeFilterEffect = () => {
-    updateSeatsData(availablePlaces);
-  };
-
-  const resetPlacesData = () => {
-    places.forEach((placeElement) => {
-      placeElement.classList.remove("available");
-      placeElement.removeAttribute("data-color");
-    });
-  };
-
   const updateSeatsData = (data) => {
     resetPlacesData();
     data.forEach((placeItem) => {
@@ -162,7 +179,7 @@ ready(function () {
     availablePlaces = await fetchData(AVAILABLE_PLACES);
 
     updateSeatsData(availablePlaces);
-
+    addScrollPadding();
     setFilters(availablePlaces);
 
     hideLoader();
@@ -170,18 +187,47 @@ ready(function () {
 
   showAvailablePlaces();
 
-  // фильтрация
+  //  фильтрация
+
+  const filterPlacesByPrice = (price) => {
+    const filteredPlaces = availablePlaces.filter((place) => place.price === price);
+    updateSeatsData(filteredPlaces);
+  };
+
+  const removeFilterEffect = () => {
+    updateSeatsData(availablePlaces);
+  };
+
+  const resetFilterButtons = () => {
+    const filterButtons = document.querySelectorAll(".js-filter-button");
+    filterButtons.forEach((button) => {
+      button.classList.remove("active");
+    });
+  };
+
+  const resetPlacesData = () => {
+    places.forEach((placeElement) => {
+      placeElement.classList.remove("available");
+      placeElement.removeAttribute("data-color");
+    });
+  };
+
+  const handleFilterButtonClick = (evt) => {
+    const currentButton = evt.target.closest(".js-filter-button");
+    if (currentButton.classList.contains("active")) {
+      currentButton.classList.remove("active");
+      removeFilterEffect();
+    } else {
+      resetFilterButtons();
+      currentButton.classList.add("active");
+      const { price } = currentButton.dataset;
+      filterPlacesByPrice(price);
+    }
+  };
+
   document.addEventListener("click", (evt) => {
     if (evt.target.closest(".js-filter-button")) {
-      const currentButton = evt.target.closest(".js-filter-button");
-      if (currentButton.classList.contains("active")) {
-        currentButton.classList.remove("active");
-        removeFilterEffect();
-      } else {
-        currentButton.classList.add("active");
-        const { price } = currentButton.dataset;
-        filterPlacesByPrice(price);
-      }
+      handleFilterButtonClick(evt);
     }
   });
 
@@ -205,6 +251,8 @@ ready(function () {
     const resultCard = document.createElement("div");
     const uniqueID = Date.now();
     resultCard.setAttribute("data-id", uniqueID);
+    resultCard.setAttribute("data-sector", sector);
+    resultCard.setAttribute("data-place", place);
     chosenPlaces.push({ ...data, id: uniqueID });
     resultCard.classList.add("seats__result-card", "result-card", "js-result-card");
     resultCard.innerHTML = `
@@ -216,18 +264,42 @@ ready(function () {
     return resultCard;
   };
 
-  // todo
-  const showResultPanel = () => {};
+  const showResultPanel = () => {
+    resultsBlock.classList.remove("hidden");
+  };
+
+  const hideResultPanel = () => {
+    resultsBlock.classList.add("hidden");
+  };
+
+  const highlightChosenPlace = (element) => {
+    element.classList.add("added");
+  };
+  const unhighlightChosenPlace = (element) => {
+    element.classList.remove("added");
+  };
 
   const handlePlaceChoose = (placeElement) => {
+    if (placeElement.classList.contains("added")) {
+      const { place, sector } = placeElement.dataset;
+      const cardElement = resultCardsContainer.querySelector(
+        `.js-result-card[data-sector="${sector}"][data-place="${place}"]`,
+      );
+
+      handleRemoveCard(cardElement, placeElement);
+      return;
+    }
     if (chosenPlaces.length < 5) {
+      highlightChosenPlace(placeElement);
       const resultCard = generateResultCard(placeElement.dataset);
       resultCardsContainer.appendChild(resultCard);
       updateResultText();
-      console.log("chosenPlaces", chosenPlaces);
     } else {
       alert("Можно выбрать не более 5 мест");
     }
+
+    chosenPlaces.length ? showResultPanel() : hideResultPanel();
+    addScrollPadding();
   };
 
   places.forEach((place) => {
@@ -236,15 +308,43 @@ ready(function () {
     });
   });
 
-  // удаление карточки
-  // todo
+  // удаление выбранного места
+  const handleRemoveCard = (resultCard, placeNode) => {
+    const { id: placeId, sector, place } = resultCard.dataset;
+    chosenPlaces = chosenPlaces.filter((place) => place.id !== Number(placeId));
+    resultCard.remove();
+    updateResultText();
+
+    if (placeNode) {
+      unhighlightChosenPlace(placeNode);
+    } else {
+      const placeElement = seatingChart.querySelector(
+        `.js-place[data-sector="${sector}"][data-place="${place}"]`,
+      );
+      unhighlightChosenPlace(placeElement);
+    }
+
+    if (!chosenPlaces.length) {
+      hideResultPanel();
+      addScrollPadding();
+    }
+  };
+
   resultCardsContainer.addEventListener("click", (evt) => {
     if (evt.target.closest(".js-remove-card")) {
       const resultCard = evt.target.closest(".js-result-card");
-      const placeId = resultCard.dataset.id;
-      chosenPlaces = chosenPlaces.filter((place) => place.id !== Number(placeId));
-      resultCard.remove();
-      updateResultText();
+      handleRemoveCard(resultCard);
     }
   });
+
+  // отправка формы
+  const handleFormSubmit = async () => {
+    submitButton.setAttribute("disabled", true);
+    showLoader();
+    const response = await postData(chosenPlaces);
+    alert(response);
+    window.location.reload();
+  };
+
+  submitButton.addEventListener("click", handleFormSubmit);
 });

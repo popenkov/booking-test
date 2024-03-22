@@ -15,6 +15,12 @@
     letter-spacing: 0px;
   }
 
+  &__row-svg {
+    width: 170px;
+    height: 20px;
+    overflow: visible;
+  }
+
   &__row {
     display: flex;
     align-items: center;
@@ -41,6 +47,11 @@
     letter-spacing: 0px;
   }
 
+  &__place-hole {
+    r: 0;
+    pointer-events: none;
+  }
+
   &__place {
     display: inline-block;
     margin: 0 3px;
@@ -58,12 +69,20 @@
     }
 
     &[data-color="green"] {
-      r: 6;
+      r: 10;
       color: var(--green);
     }
     &[data-color="blue"] {
-      r: 6;
+      r: 10;
       color: var(--blue);
+    }
+
+    &.added {
+      r: 12;
+
+      & + #{$block-name}__place-hole {
+        r: 3;
+      }
     }
   }
 }

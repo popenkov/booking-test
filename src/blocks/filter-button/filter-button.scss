@@ -35,6 +35,10 @@
     }
   }
 
+  &.active {
+    outline: 1px solid var(--green);
+  }
+
   &__text {
     font-size: 18px;
     line-height: 21px;

@@ -13,6 +13,12 @@
   letter-spacing: 0px;
   transition: background-color 0.2s ease-in;
 
+  // disabled
+  &:disabled {
+    background-color: var(--gray-300);
+    pointer-events: none;
+  }
+
   &:hover {
     background-color: var(--blue);
   }
