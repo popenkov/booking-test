@@ -256,6 +256,7 @@ ready(function () {
     });
     const response = await postData(requestModel);
     alert(response);
+    setFilters(filterButtonsContainer, availablePlaces);
     updateSoldPlaces();
     chosenPlaces = [];
     hideResultPanel();

@@ -1,6 +1,7 @@
 import { generateFilterButton } from "./generateFilterButton";
 
 export const setFilters = (buttonsContainer, data) => {
+  buttonsContainer.innerHTML = "";
   const uniquePrices = [...new Set(data.map((place) => place.price))];
   const ascSortedArr = uniquePrices.sort((a, b) => Number(a) - Number(b));
 
