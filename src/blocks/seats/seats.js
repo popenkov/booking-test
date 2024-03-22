@@ -11,9 +11,13 @@ ready(function () {
     return;
   }
 
-  let scale = 1;
+  let scale = 1,
+    translateX = 0,
+    translateY = 0;
+
   const LEFT_PADDING = 20;
   const TOP_PADDING = 20;
+  const PLACE_RADIUS = 10;
   let availablePlaces;
   let chosenPlaces = [];
 
@@ -31,13 +35,13 @@ ready(function () {
   //  масшабирование
   plusBtn.addEventListener("click", () => {
     scale += 0.1;
-    seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, 0, 0)`;
+    seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`;
   });
 
   minusBtn.addEventListener("click", () => {
     if (scale > 0.1) {
       scale -= 0.1;
-      seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, 0, 0)`;
+      seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`;
     }
   });
 
@@ -51,8 +55,8 @@ ready(function () {
         seatingChart.classList.add("draggable", "grabbing");
       }
 
-      const translateX = parseInt(seatingChart.style.transform.split(",")[4]) + evt.movementX;
-      const translateY = parseInt(seatingChart.style.transform.split(",")[5]) + evt.movementY;
+      translateX = parseInt(seatingChart.style.transform.split(",")[4]) + evt.movementX;
+      translateY = parseInt(seatingChart.style.transform.split(",")[5]) + evt.movementY;
       seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`;
     } else {
       if (isGrabbing) {
@@ -67,20 +71,21 @@ ready(function () {
   document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("mouseup", handleMouseMove);
 
-  document.addEventListener("mousemove", handleMouseMove);
-
   //  тултип при наведении
-  const generateTooltip = () => {
+  const generateTooltip = (data) => {
+    const { sector, place, price } = data.dataset;
+    const row = Number(place) <= 5 ? "1" : "2";
+    const formattedPrice = formatPrice(price);
     const tooltip = document.createElement("div");
     tooltip.classList.add("tooltip");
     tooltip.innerHTML = `
-              <div class="tooltip__price">5 000 ₽</div>
-              <div class="tooltip__place"><span>Сектор  2</span><span>1 ряд, 5 место</span></div>
+              <div class="tooltip__price">${formattedPrice}</div>
+              <div class="tooltip__place"><span>Сектор  ${sector}</span><span>${row} ряд, ${place} место</span></div>
             `;
     return tooltip;
   };
 
-  function calculatePlacePosition(place, tooltipElement) {
+  function calculateTooltipPosition(place, tooltipElement) {
     const tooltipHeight = tooltipElement.offsetHeight;
     const { left, top } = place.getBoundingClientRect();
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -90,13 +95,13 @@ ready(function () {
     if (distanceToTop < scrollPosition) {
       tooltipElement.classList.add("tooltip--bottom");
       return {
-        left: `${left - tooltipElement.offsetWidth / 2 + LEFT_PADDING}px`,
+        left: `${left + LEFT_PADDING - PLACE_RADIUS / 2}px`,
         top: `${top + TOP_PADDING - scrollPosition}px`,
       };
     } else {
       tooltipElement.classList.remove("tooltip--bottom");
       return {
-        left: `${left - tooltipElement.offsetWidth / 2 + LEFT_PADDING}px`,
+        left: `${left + LEFT_PADDING - PLACE_RADIUS / 2}px`,
         top: `${distanceToTop}px`,
       };
     }
@@ -110,7 +115,7 @@ ready(function () {
         tooltipElement.style.opacity = 1;
       }, 20);
 
-      const position = calculatePlacePosition(place, tooltipElement);
+      const position = calculateTooltipPosition(place, tooltipElement);
       tooltipElement.style.left = position.left;
       tooltipElement.style.top = position.top;
     });
@@ -358,7 +363,14 @@ ready(function () {
   const handleFormSubmit = async () => {
     submitButton.setAttribute("disabled", true);
     showLoader();
-    const response = await postData(chosenPlaces);
+    const requestModel = chosenPlaces.map((obj) => {
+      return {
+        sector: obj.sector,
+        place: obj.place,
+        price: obj.price,
+      };
+    });
+    const response = await postData(requestModel);
     alert(response);
     updateSoldPlaces();
     chosenPlaces = [];

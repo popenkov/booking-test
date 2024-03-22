@@ -206,7 +206,7 @@ export const config = {
   // library
   buildLibrary: process.env.BUILD_LIBRARY || false,
   // navigation
-  isProjectNav: true,
+  isProjectNav: false,
   // repository ghPages url
   deployUrl: ghPagesUrl,
   // log

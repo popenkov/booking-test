@@ -2,11 +2,15 @@
 
 .page {
   $block-name: &; // #{$block-name}__element
-
+  position: relative;
   display: grid;
   grid-template-areas: "header header" "sidebar center";
-  grid-template-columns: var(--aside-width) 1fr;
+  grid-template-columns: var(--aside-width) calc(100% - var(--aside-width));
   gap: 20px 30px;
+
+  &__inner {
+    position: relative;
+  }
 
   &__title {
     margin: 0;
@@ -16,7 +20,7 @@
     letter-spacing: 0;
   }
 
-  &__title + &__content {
+  &__title + &__inner {
     margin-top: 28px;
   }
 
@@ -26,6 +30,6 @@
 
   &__main {
     margin-top: 11px;
-    margin-right: 30px;
+    padding-right: 30px;
   }
 }
