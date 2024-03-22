@@ -1,6 +1,5 @@
 import ready from "./utils/documentReady.js";
 import { formatPrice } from "./utils/formatPrice.js";
-import { handleMouseMove } from "./utils/handleMouseMove.js";
 import { resetPlacesData } from "./utils/resetPlacesData.js";
 import { setFilters } from "./utils/setFilters.js";
 import { hideLoader, showLoader } from "./utils/showLoader.js";
@@ -49,13 +48,30 @@ ready(function () {
     }
   });
 
-  //  управление картой зала
-  document.addEventListener("mousemove", (evt) => {
-    handleMouseMove(evt, seatingChart, translateX, translateY, scale);
-  });
-  document.addEventListener("mouseup", (evt) => {
-    handleMouseMove(evt, seatingChart, translateX, translateY, scale);
-  });
+  //  управление картой зала\
+
+  let isGrabbing = false;
+  const handleMouseMove = (evt) => {
+    if (evt.buttons === 1) {
+      if (!isGrabbing) {
+        isGrabbing = true;
+        seatingChart.classList.add("draggable", "grabbing");
+      }
+      translateX = parseInt(seatingChart.style.transform.split(",")[4]) + evt.movementX;
+      translateY = parseInt(seatingChart.style.transform.split(",")[5]) + evt.movementY;
+      seatingChart.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`;
+    } else {
+      if (isGrabbing) {
+        isGrabbing = false;
+        seatingChart.classList.remove("grabbing");
+      }
+
+      seatingChart.classList.remove("draggable");
+    }
+  };
+
+  document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", handleMouseMove);
 
   //  тултип при наведении
   showTooltipOnHover(places);
