@@ -1,0 +1,69 @@
+extends ../templates/template__default-client.pug
+
+block variables
+  - isMainPage = false
+  - pageTitle = "Покупка билетов"
+  - metaDescription = "description"
+  - metaKeywords = "keywords"
+
+block content
+  .session-widget-client
+    +header-client
+    .session-widget-client__container
+      .session-widget-client__filters.js-filters-container
+      .session-widget-client__content.seats.js-seats-page
+
+        +loader(class="seats__loader js-loader hidden")
+        .session-widget-client__inner.js-seats-container(style="transform: matrix(1, 0, 0, 1, 0, 0)")
+
+          .session-widget-client__sector.session-widget-client__sector--three.sector.js-sector(data-sector="3")
+            h2.sector__title Сектор 3
+            .sector__row
+              span.sector__row-name 1
+              svg.sector__row-svg(viewBox="0 0 170 20")
+                g.sector__row-places
+                  g
+                    <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="1"/>
+                    <circle cx="5" cy="10" r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="2"/>
+                    <circle cx="45" cy="10" r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="3"/>
+                    <circle  cx="85" cy="10"  r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="4"/>
+                    <circle cx="125" cy="10" r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="5"/>
+                    <circle cx="165" cy="10" r="3" fill="white"  class="sector__place-hole"/>
+              span.sector__row-name 1
+            .sector__row
+              span.sector__row-name 2
+              svg.sector__row-svg(viewBox="0 0 170 20")
+                g.sector__row-places
+                  g
+                    <circle cx="5" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="6"/>
+                    <circle cx="5" cy="10"  r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="45" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="7"/>
+                    <circle cx="45" cy="10" r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="85" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="8"/>
+                    <circle cx="85" cy="10"r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="125" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="9"/>
+                    <circle cx="125" cy="10" r="3" fill="white"  class="sector__place-hole"/>
+                  g
+                    <circle cx="165" cy="10" r="5" fill="currentColor" class="sector__place js-place" data-sector="3" data-place="10"/>
+                    <circle cx="165" cy="10" r="3" fill="white"  class="sector__place-hole"/>
+              span.sector__row-name 2
+
+      .session-widget-client__result.js-results-block.hidden
+        .session-widget-client__result-cards.js-result-cards
+        span.session-widget-client__result-text.js-result-text
+        button.session-widget-client__result-button.button.js-submit-button Далее
+      .session-widget-client__controls
+        button.session-widget-client__control.zoom-button.js-plus-button +
+        button.session-widget-client__control.zoom-button.js-minus-button −
+

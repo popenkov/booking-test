@@ -2,6 +2,7 @@
 
 .page {
   $block-name: &; // #{$block-name}__element
+
   position: relative;
   display: grid;
   grid-template-areas: "header header" "sidebar center";

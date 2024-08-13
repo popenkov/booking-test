@@ -1,0 +1,37 @@
+@use "../../scss/breakpoints";
+
+.header-client {
+  $block-name: &; // #{$block-name}__element
+
+  padding: 10px 22px;
+  color: #fff;
+  background-color: #00bcd5;
+
+  &__inner {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0;
+  }
+
+  &__date {
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+
+  &__close-button {
+    align-self: flex-end;
+  }
+}

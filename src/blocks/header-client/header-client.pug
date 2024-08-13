@@ -1,0 +1,27 @@
+//- Все примеси в этом файле должны начинаться c имени блока (header-client)
+//- Упоминание имени блока в классах обязательно, без этого он не попадёт
+//- в сборку
+
+mixin header-client(mods)
+
+  //- Принимает:
+  //-   mods    {string} - список модификаторов
+  //- Вызов:
+        +header-client("some-mod")
+
+  //- список модификаторов
+  -
+    var allMods = "";
+    if (typeof (mods) !== "undefined" && mods) {
+      var modsList = mods.split(",");
+      for (var i = 0; i < modsList.length; i++) {
+        allMods = allMods + " header-client--" + modsList[i].trim();
+      }
+    }
+
+  .header-client(class=allMods)&attributes(attributes)
+    .header-client__inner
+      .header-client__content
+        h2.header-client__title Матч СКА - ЦСКА
+        span.header-client__date СБ, 1 сентября 19:00
+      button.header-client__close-button X
