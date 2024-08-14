@@ -15,14 +15,21 @@
   justify-content: center;
 
   &__content {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     min-width: 100px;
-    height: 100%;
+    height: 100vh;
     min-height: 350px;
-    max-height: calc(100vh - 200px);
-    overflow: auto;
+    max-height: calc(100vh - 61px);
     background: rgb(249 249 249);
     border: 1px solid rgb(155 155 155);
+  }
+
+  &__seats {
+    position: relative;
+    height: 100%;
+    overflow: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
 
@@ -35,11 +42,10 @@
 
   &__inner {
     position: relative;
-    display: grid;
-    grid-template-areas: "sectorThree sectorFour" "arena arena" "sectorOne sectorTwo";
-    grid-template-columns: 1fr 1fr;
-    gap: 46px;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    align-items: center;
     padding: 90px 40px 50px;
 
     &.loading {
@@ -59,12 +65,16 @@
   }
 
   &__filters {
-    position: absolute;
-    top: 37px;
-    left: 39px;
-    z-index: 2;
     display: flex;
     gap: 40px;
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  &__places-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   &__controls {
@@ -78,40 +88,14 @@
     transform: translateY(-50%);
   }
 
-  &__sector {
-    &--one {
-      grid-area: sectorOne;
-    }
-
-    &--two {
-      grid-area: sectorTwo;
-    }
-
-    &--three {
-      grid-area: sectorThree;
-    }
-
-    &--four {
-      grid-area: sectorFour;
-    }
-  }
-
-  &__arena {
+  &__dancefloor {
     display: flex;
-    grid-area: arena;
     align-items: center;
     justify-content: center;
-    width: 1037px;
-    height: 528px;
-    border: 4px solid var(--blue-dark);
-    border-radius: 100px;
-  }
-
-  &__arena-inner {
-    width: 962px;
-    height: 462px;
-    border: 2px solid var(--blue-dark);
-    border-radius: 75px;
+    min-width: 393px;
+    padding: 23px 0;
+    border-top: 1px solid rgb(231 231 231);
+    border-bottom: 1px solid rgb(231 231 231);
   }
 
   &__result {
@@ -138,5 +122,26 @@
     flex-direction: row-reverse;
     gap: 5px;
     margin-right: 20px;
+  }
+
+  // sector
+
+  &__sector {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  &__row-name {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0;
   }
 }

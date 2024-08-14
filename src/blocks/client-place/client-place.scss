@@ -1,0 +1,45 @@
+@use "../../scss/breakpoints";
+
+.client-place {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  color: #dbdbdb;
+
+  &--dancefloor {
+    .client-place__svg-place {
+      r: 10;
+    }
+  }
+
+  &__svg {
+    width: 24px;
+    height: 24px;
+    overflow: visible;
+    // todo
+    // color: #9013fe;
+    cursor: pointer;
+  }
+
+  // &__svg-hole {
+  // }
+
+  &__title {
+    color: #000;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0;
+  }
+  $block-name: &; // #{$block-name}__element
+
+  &.active {
+    .client-place__svg-place {
+      r: 10;
+    }
+  }
+
+  &.added {
+    r: 12;
+  }
+}

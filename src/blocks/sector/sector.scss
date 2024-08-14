@@ -1,49 +1,102 @@
 @use "../../scss/breakpoints";
 
-.sector {
-  $block-name: &; // #{$block-name}__element
+// todo old
+// .sector {
+//   $block-name: &; // #{$block-name}__element
 
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+
+//   &__title {
+//     margin: 0;
+//     font-weight: 400;
+//     font-size: 18px;
+//     line-height: 21px;
+//     letter-spacing: 0;
+//   }
+
+//   &__row-svg {
+//     width: 170px;
+//     height: 20px;
+//     overflow: visible;
+//   }
+
+//   &__row {
+//     display: flex;
+//     gap: 30px;
+//     align-items: center;
+//   }
+
+//   &__title + &__row {
+//     margin-top: 25px;
+//   }
+
+//   &__row + &__row {
+//     margin-top: 20px;
+//   }
+
+//   &__row-places {
+//     width: 197px;
+//     height: 20px;
+//   }
+
+//   &__row-name {
+//     font-weight: 400;
+//     font-size: 14px;
+//     line-height: 16px;
+//     letter-spacing: 0;
+//   }
+
+//   &__place-hole {
+//     r: 0;
+//     pointer-events: none;
+//   }
+
+//   &__place {
+//     position: relative;
+//     display: inline-block;
+//     width: 10px;
+//     min-width: 10px;
+//     height: 10px;
+//     margin: 0 3px;
+//     color: var(--gray-500);
+//     border-radius: 50%;
+//     pointer-events: none;
+
+//     &.available {
+//       cursor: pointer;
+//       pointer-events: all;
+//     }
+
+//     &[data-color="green"] {
+//       color: var(--green);
+//       r: 10;
+//     }
+
+//     &[data-color="blue"] {
+//       color: var(--blue);
+//       r: 10;
+//     }
+
+//     &.added {
+//       r: 12;
+
+//       & + #{$block-name}__place-hole {
+//         r: 3;
+//       }
+//     }
+//   }
+// }
+.sector {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 20px;
 
   &__title {
     margin: 0;
     font-weight: 400;
     font-size: 18px;
     line-height: 21px;
-    letter-spacing: 0;
-  }
-
-  &__row-svg {
-    width: 170px;
-    height: 20px;
-    overflow: visible;
-  }
-
-  &__row {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-  }
-
-  &__title + &__row {
-    margin-top: 25px;
-  }
-
-  &__row + &__row {
-    margin-top: 20px;
-  }
-
-  &__row-places {
-    width: 197px;
-    height: 20px;
-  }
-
-  &__row-name {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
     letter-spacing: 0;
   }
 
@@ -81,9 +134,113 @@
     &.added {
       r: 12;
 
-      & + #{$block-name}__place-hole {
+      & + .sector__place-hole {
         r: 3;
       }
     }
+  }
+
+  &__row-svg {
+    // todo
+    width: 20px;
+    height: 20px;
+    overflow: visible;
+    cursor: pointer;
+
+    // todo  состояние мест
+
+    &.disabled {
+      .sector__place {
+        color: #d9d9d9;
+        r: 12;
+
+        .sector__place-hole {
+          r: 3;
+          color: #fff;
+        }
+      }
+    }
+
+    &.selected {
+      // background-color: rgba(239, 231, 45, 50%);
+      color: green;
+
+      .sector__place {
+        color: #d9d9d9;
+      }
+
+      .sector__place-hole {
+        r: 3;
+        color: #fff;
+      }
+    }
+
+    &.price-set {
+      // background-color: rgba(239, 231, 45, 50%);
+      color: green;
+
+      .sector__place {
+        color: #86bc25;
+      }
+
+      .sector__place-hole {
+        r: 3;
+        color: #86bc25;
+      }
+    }
+
+    &.used-ticket {
+      .sector__place {
+        color: #f8c3c3;
+      }
+
+      .sector__place-hole {
+        r: 3;
+        color: #fff;
+      }
+    }
+
+    // todo
+    &--new {
+      width: 20px;
+    }
+  }
+
+  &__row-place.selected {
+    position: relative;
+
+    &::after {
+      position: absolute;
+      z-index: -1;
+      inset: 0 -12px 0 -13px;
+      background-color: rgb(239 231 45 / 50%);
+      opacity: 0.5;
+      content: "";
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  &__title + &__row {
+    margin-top: 25px;
+  }
+
+  &__row-places {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__row-name {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
   }
 }
