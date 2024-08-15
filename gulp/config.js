@@ -154,7 +154,8 @@ export const config = {
     // "somePackage/dist/somePackage.css", // for "node_modules/somePackage/dist/somePackage.css",
   ],
   // style imports at end
-  addStyleAfter: ["src/blocks/tooltip/tooltip.scss","src/blocks/filter-button/filter-button.scss","src/blocks/result-card/result-card.scss"],
+  addStyleAfter: ["src/blocks/tooltip/tooltip.scss","src/blocks/filter-button/filter-button.scss","src/blocks/result-card/result-card.scss",
+    "src/blocks/confirmation/confirmation.scss","src/blocks/client-payment-success/client-payment-success.scss"],
   // js imports at start
   addJsBefore: [
     // "somePackage/dist/somePackage.js", // for "node_modules/somePackage/dist/somePackage.js",
@@ -162,6 +163,8 @@ export const config = {
   // js imports at end
   addJsAfter: [
     "./script.js",
+
+    "./src/blocks/confirmation/confirmation.js"
   ],
   // style sheets
   styleSheets: [

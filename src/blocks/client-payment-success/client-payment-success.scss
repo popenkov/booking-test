@@ -1,0 +1,7 @@
+@use "../../scss/breakpoints";
+
+.client-payment-success {
+  $block-name: &; // #{$block-name}__element
+
+  background-color: #4cae50;
+}
