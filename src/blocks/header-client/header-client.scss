@@ -3,7 +3,7 @@
 .header-client {
   $block-name: &; // #{$block-name}__element
 
-  padding: 10px 22px;
+  padding: 11px 22px;
   color: #fff;
   background-color: #00bcd5;
 
@@ -34,6 +34,8 @@
   &__close-button {
     position: absolute;
     right: 20px;
+    padding: 0;
+    border: none;
     cursor: pointer;
   }
 }

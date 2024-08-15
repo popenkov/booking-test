@@ -1,0 +1,43 @@
+extends ../templates/template__default-client.pug
+
+block variables
+  - isMainPage = false
+  - pageTitle = "Покупка билетов"
+  - metaDescription = "description"
+  - metaKeywords = "keywords"
+
+block content
+  .confirmation.js-tickets-confirmation
+    +header-client
+    .confirmation__content
+      h2.confirmation__title Проверьте билеты
+      .confirmation__tickets
+        .confirmation__tickets-title Билеты
+        ul.confirmation__tickets-list.js-tickets-container
+          li.confirmation__tickets-item.confirmation-ticket
+            span.confirmation-ticket__place 4 ряд, 8 место, сектор 6
+            span.confirmation-ticket__price 2 000 ₽
+          li.confirmation__tickets-item.confirmation-ticket
+            span.confirmation-ticket__place 4 ряд, 7 место, сектор 6
+            span.confirmation-ticket__price 2 000 ₽
+          li.confirmation__tickets-item.confirmation-ticket
+            span.confirmation-ticket__place 3 ряд, 8 место, сектор 6
+            span.confirmation-ticket__price 2 000 ₽
+        .confirmation__tickets-total
+        .confirmation__tickets-total-key ИТОГО
+        .confirmation__tickets-total-value.js-tickets-total-value 8 000 ₽
+
+
+      h2.confirmation__title Данные для получения билетов
+      .confirmation__contacts
+      //- todo
+
+      .confirmation__agreement После оплаты купленный билет будет направлен на указанный Вами e-mail. Вы можете также скачать билет по завершении оплаты.
+        <br/>
+        | Совершая оплату, вы принимаете и соглашаетесь с условиями "<a href="#">Политики конфиденциальности</a>" и "<a href="#">Пользовательского соглашения</a>"
+
+
+    .confirmation__footer
+      button.confirmation__footer-button--secondary НАЗАД
+      button.confirmation__footer-button--primary ВСЕ ВЕРНО, ПЕРЕЙТИ К ОПЛАТЕ
+

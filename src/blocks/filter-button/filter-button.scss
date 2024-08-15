@@ -1,47 +1,47 @@
-@use "../../scss/breakpoints";
+// @use "../../scss/breakpoints";
 
-.filter-button {
-  $block-name: &; // #{$block-name}__element
+// .filter-button {
+//   $block-name: &; // #{$block-name}__element
 
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  padding: 9px 29px 10px 13px;
-  background-color: var(--back-primary);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 25%);
-  cursor: pointer;
+//   display: flex;
+//   gap: 16px;
+//   align-items: center;
+//   padding: 9px 29px 10px 13px;
+//   background-color: var(--back-primary);
+//   border: none;
+//   border-radius: 20px;
+//   box-shadow: 0 4px 20px 0 rgb(0 0 0 / 25%);
+//   cursor: pointer;
 
-  &:hover {
-    background-color: var(--gray-200);
-  }
+//   &:hover {
+//     background-color: var(--gray-200);
+//   }
 
-  &__color {
-    width: 21px;
-    height: 21px;
-    border-radius: 50%;
-  }
+//   &__color {
+//     width: 21px;
+//     height: 21px;
+//     border-radius: 50%;
+//   }
 
-  &.green {
-    #{$block-name}__color {
-      background-color: var(--green);
-    }
-  }
+//   &.green {
+//     #{$block-name}__color {
+//       background-color: var(--green);
+//     }
+//   }
 
-  &.blue {
-    #{$block-name}__color {
-      background-color: var(--blue);
-    }
-  }
+//   &.blue {
+//     #{$block-name}__color {
+//       background-color: var(--blue);
+//     }
+//   }
 
-  &.active {
-    outline: 1px solid var(--green);
-  }
+//   &.active {
+//     outline: 1px solid var(--green);
+//   }
 
-  &__text {
-    font-size: 18px;
-    line-height: 21px;
-    letter-spacing: 0;
-  }
-}
+//   &__text {
+//     font-size: 18px;
+//     line-height: 21px;
+//     letter-spacing: 0;
+//   }
+// }

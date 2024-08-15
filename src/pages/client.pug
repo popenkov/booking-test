@@ -16,7 +16,7 @@ block content
         +loader(class="seats__loader js-loader hidden")
         .session-widget-client__inner.js-seats-container(style="transform: matrix(1, 0, 0, 1, 0, 0)")
           .session-widget-client__dancefloor
-            .client-place.client-place--dancefloor.js-place-wrapper(draggable='false' style="color: #9013FE;" data-sector='1' data-place='1' data-price='233' data-ticket-number='1243' data-is-used='23.05.2024, 17:57' data-ticket-link='/ticket-link')
+            .client-place.client-place--dancefloor.js-place-dancefloor(draggable='false' style="color: #9013FE;" data-sector='1' data-place='1' data-price='233' data-ticket-number='1243' data-is-used='23.05.2024, 17:57' data-ticket-link='/ticket-link')
               svg.client-place__svg.js-place( draggable='false' viewbox='0 0 20 20')
                 g
                   circle.client-place__svg-place(cx='10' cy='10' r='5' fill='currentColor')
@@ -200,8 +200,9 @@ block content
 
       .session-widget-client__result.js-results-block.hidden
         .session-widget-client__result-cards.js-result-cards
-        span.session-widget-client__result-text.js-result-text
-        button.session-widget-client__result-button.button.js-submit-button Далее
+        button.session-widget-client__result-button.js-submit-button
+          span.session-widget-client__result-button-title Далее:&nbsp;
+          span.session-widget-client__result-button-value.js-result-text
       .session-widget-client__controls
         button.session-widget-client__control.zoom-button.js-plus-button +
         button.session-widget-client__control.zoom-button.js-minus-button −
