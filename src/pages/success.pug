@@ -8,3 +8,15 @@ block variables
 
 block content
   .client-payment-success
+    .client-payment-success__content
+      svg.client-payment-success__icon(width='100' height='100' viewbox='0 0 100 100' fill='none')
+        circle#Oval(cx='50' cy='50' r='38' fill='#409744' fill-opacity='1')
+        circle#Oval(cx='50' cy='50' r='38' stroke='#9B9B9B' stroke-opacity='0' stroke-width='0')
+        path#Shape(d='M50 0C22.4121 0 0 22.412 0 50C0 77.588 22.4121 100 50 100C77.5879 100 100 77.588 100 50C100 22.412 77.5879 0 50 0ZM50 4.34778C75.2383 4.34778 95.6523 24.7618 95.6523 50C95.6523 75.2382 75.2383 95.6522 50 95.6522C24.7617 95.6522 4.34766 75.2382 4.34766 50C4.34766 24.7618 24.7617 4.34778 50 4.34778ZM69.9395 29.2162C70.332 28.6165 70.9961 28.2495 71.7129 28.2354C72.5312 28.2192 73.2891 28.6633 73.6738 29.3848C74.0586 30.1061 74.0078 30.9827 73.5391 31.6533L48.5137 68.5334L28.957 50.3864C28.3711 49.8627 28.1113 49.063 28.2812 48.295C28.4512 47.5271 29.0234 46.9108 29.7754 46.6832C30.5293 46.4557 31.3457 46.6523 31.9121 47.1978L47.7617 61.9055L69.9395 29.2162Z' clip-rule='evenodd' fill='#FFFFFF' fill-opacity='1' fill-rule='evenodd')
+
+      h2.client-payment-success__title Билеты успешно куплены!
+      a.client-payment-success__link(href="#") СКАЧАТЬ БИЛЕТЫ
+
+      .client-payment-success__info
+        span.client-payment-success__info-text При возникновении вопросов свяжитесь <br/> с администратором ледовой арены.
+        a.client-payment-success__info-phone(href="tel:4957455623") (495) 745-56-23

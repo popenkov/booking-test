@@ -3,5 +3,84 @@
 .client-payment-success {
   $block-name: &; // #{$block-name}__element
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #fff;
   background-color: #4cae50;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 17px;
+  }
+
+  &__icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  &__title {
+    max-width: 200px;
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 24px;
+    color: #4cae50;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+    text-decoration: none;
+    background: #fff;
+    border-radius: 5px;
+  }
+
+  &__title + &__link {
+    margin-top: 25px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__link + &__info {
+    margin-top: 27px;
+  }
+
+  &__info-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  &__info-phone {
+    color: #fff;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0;
+    text-align: center;
+    text-decoration: none;
+  }
 }

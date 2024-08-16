@@ -219,6 +219,7 @@ ready(function () {
 
       this.availablePlaces = [];
       this.chosenPlaces = [];
+      this.dancefloorPlaceAmount = 0;
 
       this.LEFT_PADDING = 20;
       this.TOP_PADDING = 20;
@@ -228,6 +229,7 @@ ready(function () {
       this.plusBtn = this.form.querySelector(".js-plus-button");
       this.minusBtn = this.form.querySelector(".js-minus-button");
       this.seatingChart = this.form.querySelector(".js-seats-container");
+      this.seatsSchema = this.form.querySelector(".js-client-seats-page");
 
       this.places = this.form.querySelectorAll(".js-place-wrapper");
       this.loader = this.form.querySelector(".js-loader");
@@ -237,6 +239,11 @@ ready(function () {
       this.resultText = this.form.querySelector(".js-result-text");
       this.submitButton = this.form.querySelector(".js-submit-button");
       this.dancefloorPlace = this.form.querySelector(".js-place-dancefloor");
+      this.dancefloorPlaceCounter = this.form.querySelector(".js-seats-counter");
+
+      if (this.dancefloorPlaceCounter) {
+        this.initDancefloorPlaceCounter();
+      }
 
       this.showAvailablePlaces();
 
@@ -269,8 +276,8 @@ ready(function () {
         }
       });
 
-      this.form.addEventListener("mousemove", (evt) => this.handleMouseMove(evt));
-      this.form.addEventListener("mouseup", (evt) => this.handleMouseMove(evt));
+      this.seatsSchema.addEventListener("mousemove", (evt) => this.handleMouseMove(evt));
+      this.seatsSchema.addEventListener("mouseup", (evt) => this.handleMouseMove(evt));
 
       this.resultCardsContainer.addEventListener("click", (evt) => {
         if (evt.target.closest(".js-remove-card")) {
@@ -278,7 +285,7 @@ ready(function () {
           this.handleRemoveCard(resultCard);
         }
       });
-      this.submitButton.addEventListener("click", this.handleFormSubmit);
+      this.submitButton.addEventListener("click", this.handleFormSubmit.bind(this));
 
       this.showTooltipOnHover(this.places);
     }
@@ -305,6 +312,17 @@ ready(function () {
     }
 
     // utils
+
+    removeArrDuplicates(arr1, arr2) {
+      const idsToExclude = new Set(arr2.map((item) => `${item.sector}-${item.place}`));
+
+      const result = arr1.filter((item) => {
+        const { sector, place } = item;
+        return !idsToExclude.has(`${sector}-${place}`);
+      });
+
+      return result;
+    }
 
     async postData(data) {
       return new Promise((resolve) => {
@@ -439,7 +457,6 @@ ready(function () {
 
       // todo
       if (data.length !== this.availablePlaces) {
-        const combinedArray = [...data, ...this.availablePlaces];
         const notSelectedPlaces = this.availablePlaces.filter((item) => {
           const sectorRowPlace = `${item.sector}${item.row}${item.place}`;
           return !data.some(
@@ -448,7 +465,7 @@ ready(function () {
           );
         });
         notSelectedPlaces.forEach((placeItem) => {
-          const { sector, place, row, price, color } = placeItem;
+          const { sector, place, row, color } = placeItem;
 
           const placeElement = this.seatingChart.querySelector(
             `.js-place-wrapper[data-sector="${sector}"][data-place="${place}"][data-row="${row}"]`,
@@ -516,18 +533,18 @@ ready(function () {
       textContainer.innerHTML = `${ticketsAmount} ${ticketWord}, ${formattedPrice}`;
     }
 
-    generateResultCard(data) {
+    generateResultCard(data, uniqueID) {
       const { sector, place, price } = data;
 
       const row = Number(place) <= 5 ? "1" : "2";
 
       const formattedPrice = this.formatPrice(price);
       const resultCard = document.createElement("div");
-      const uniqueID = Date.now();
+
       resultCard.setAttribute("data-id", uniqueID);
       resultCard.setAttribute("data-sector", sector);
       resultCard.setAttribute("data-place", place);
-      this.chosenPlaces.push({ ...data, id: uniqueID });
+
       resultCard.classList.add(
         "session-widget-client__result-card",
         "result-card",
@@ -573,7 +590,9 @@ ready(function () {
       }
 
       this.highlightChosenPlace(placeElement);
-      const resultCard = this.generateResultCard(placeElement.dataset);
+      const uniqueID = Date.now();
+      const resultCard = this.generateResultCard(placeElement.dataset, uniqueID);
+      this.chosenPlaces.push({ ...placeElement.dataset, id: uniqueID });
       this.resultCardsContainer.appendChild(resultCard);
       this.updateResultText(this.resultText, this.chosenPlaces);
 
@@ -583,22 +602,85 @@ ready(function () {
 
     handleDancefloorClick() {
       if (this.dancefloorPlace.classList.contains("added")) {
-        const { place, sector } = this.dancefloorPlace.dataset;
-        const cardElement = this.resultCardsContainer.querySelector(
-          `.js-result-card[data-sector="${sector}"][data-place="${place}"]`,
-        );
+        // const { place, sector } = this.dancefloorPlace.dataset;
+        // const cardElement = this.resultCardsContainer.querySelector(
+        //   `.js-result-card[data-sector="${sector}"][data-place="${place}"]`,
+        // );
 
-        this.handleRemoveCard(cardElement, this.dancefloorPlace);
+        // this.handleRemoveCard(cardElement, this.dancefloorPlace);
         return;
       }
-
+      this.dancefloorPlaceAmount = 1;
       this.highlightChosenPlace(this.dancefloorPlace);
-      const resultCard = this.generateResultCard(this.dancefloorPlace.dataset);
-      this.resultCardsContainer.appendChild(resultCard);
+      const uniqueID = Date.now();
+
+      // const placeModel = {
+      //   sector: "",
+      //   row: "",
+      //   place: "dancefloor",
+      //   price: "5000",
+      //   ticketNumber: "1243",
+      //   id: 1723817925348,
+      // };
+
+      // const resultCard = this.generateResultCard(this.dancefloorPlace.dataset, uniqueID);
+      this.chosenPlaces.push({ ...this.dancefloorPlace.dataset, id: uniqueID });
+      console.log("this.chosenPlaces", this.chosenPlaces);
+
+      // this.resultCardsContainer.appendChild(resultCard);
       this.updateResultText(this.resultText, this.chosenPlaces);
 
       this.chosenPlaces.length ? this.showResultPanel() : this.hideResultPanel();
       // this.addScrollPadding();
+    }
+
+    initDancefloorPlaceCounter() {
+      const incrementButton = this.dancefloorPlaceCounter.querySelector(
+        ".js-seats-counter-increment",
+      );
+      const decrementButton = this.dancefloorPlaceCounter.querySelector(
+        ".js-seats-counter-decrement",
+      );
+      const counterInput = this.dancefloorPlaceCounter.querySelector(".js-seats-counter-input");
+
+      console.log("incrementButton", incrementButton);
+
+      incrementButton.addEventListener("click", () => {
+        handleItemIncrease();
+      });
+      decrementButton.addEventListener("click", () => {
+        handleItemDecrease();
+      });
+
+      const updateDancefloorTickets = (value) => {
+        // обновить текст кнопки
+        const dancefloorObj = this.chosenPlaces.find((item) => {
+          return item.place === "dancefloor";
+        });
+        dancefloorObj.price = Number(dancefloorObj.price) * this.dancefloorPlaceAmount;
+        this.updateResultText(this.resultText, this.chosenPlaces);
+      };
+
+      const removeCounter = () => {};
+
+      const removeDancefloorTickets = () => {};
+
+      const handleItemIncrease = () => {
+        this.dancefloorPlaceAmount += 1;
+        counterInput.value = this.dancefloorPlaceAmount;
+        updateDancefloorTickets(this.dancefloorPlaceAmount);
+      };
+
+      const handleItemDecrease = () => {
+        if (this.dancefloorPlaceAmount > 1) {
+          this.dancefloorPlaceAmount -= 1;
+          counterInput.value = this.dancefloorPlaceAmount;
+          updateDancefloorTickets(this.dancefloorPlaceAmount);
+        } else {
+          removeCounter();
+          removeDancefloorTickets();
+        }
+      };
     }
 
     // tooltip
@@ -721,6 +803,7 @@ ready(function () {
 
     // отправка формы
     async handleFormSubmit() {
+      console.log("this.submitButton", this.submitButton);
       this.submitButton.setAttribute("disabled", true);
       this.availablePlaces = this.removeArrDuplicates(this.availablePlaces, this.chosenPlaces);
       this.showLoader(this.seatingChart, this.loader);

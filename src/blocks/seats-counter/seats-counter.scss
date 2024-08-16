@@ -1,0 +1,60 @@
+@use "../../scss/breakpoints";
+
+.seats-counter {
+  $block-name: &; // #{$block-name}__element
+
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    color: #000;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+
+  &__value {
+    color: #979797;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+
+  &__input-wrapper {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  &__input-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    color: #fff;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0;
+    background-color: #00bcd5;
+    border: none;
+    border-radius: 5px;
+  }
+
+  &__input {
+    width: 33px;
+    padding: 0;
+    text-align: center;
+    border: none;
+  }
+}
