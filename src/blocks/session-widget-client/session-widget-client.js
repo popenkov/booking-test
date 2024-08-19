@@ -237,6 +237,7 @@ ready(function () {
       this.choosePlaceSubmitButton = this.form.querySelector(".js-to-confirmation-button");
       this.backToPLaceChooseButton = this.form.querySelector(".js-back-to-place-choose-button");
       this.submitButton = this.form.querySelector(".js-submit-client-form");
+      this.confirmationTickets = this.form.querySelector(".js-tickets-container");
 
       this.isGrabbing = false;
       this.plusBtn = this.form.querySelector(".js-plus-button");
@@ -315,6 +316,7 @@ ready(function () {
       console.log("handlePlaceConfirmationOpen");
       this.choosePlaceWindow.classList.add("hidden");
       this.confirmPlaceWindow.classList.remove("hidden");
+      this.updateChosenTicketsToConfirm();
     }
 
     handlePlaceChooseOpen() {
@@ -866,6 +868,23 @@ ready(function () {
         );
 
         this.handleRemoveCard(cardElement, placeElement);
+      });
+    }
+
+    // подтверждение места
+    getTicketMarkup(data) {
+      const { price, row, sector, place } = data;
+      const formattedPrice = this.formatPrice(price);
+      return `<li class="confirmation__tickets-item confirmation-ticket"><span class="confirmation-ticket__place">${row} ряд, ${place}
+              место, сектор ${sector}</span><span class="confirmation-ticket__price">${formattedPrice}</span>
+        </li>`;
+    }
+
+    updateChosenTicketsToConfirm() {
+      this.confirmationTickets.innerHTML = null;
+      this.chosenPlaces.forEach((ticket) => {
+        const ticketMarkup = this.getTicketMarkup(ticket);
+        this.confirmationTickets.insertAdjacentHTML("beforeend", ticketMarkup);
       });
     }
 
