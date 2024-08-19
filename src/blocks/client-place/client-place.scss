@@ -47,9 +47,13 @@
     }
   }
 
-  &.added {
+  &:not(.client-place--dancefloor).added {
     .client-place__svg-place {
       r: 23;
+
+      @media (max-width: 768px) {
+        r: 21px;
+      }
     }
 
     .client-place__svg-hole {

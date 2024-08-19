@@ -10,6 +10,13 @@ ready(function () {
   const MOCK_AVAILABLE_PLACES = [
     {
       sector: "1",
+      row: "dancefloor",
+      place: "dancefloor",
+      price: "2000",
+      color: "#9013FE",
+    },
+    {
+      sector: "1",
       row: 4,
       place: "1",
       price: "5000",
@@ -219,7 +226,7 @@ ready(function () {
 
       this.availablePlaces = [];
       this.chosenPlaces = [];
-      this.dancefloorPlaceAmount = 0;
+      // this.dancefloorPlaceAmount = 0;
 
       this.LEFT_PADDING = 20;
       this.TOP_PADDING = 20;
@@ -437,14 +444,21 @@ ready(function () {
         placeElement.classList.remove("inactive");
       });
     }
+
     updateSeatsData(data) {
       this.resetPlacesData(this.places);
       data.forEach((placeItem) => {
         const { sector, place, row, price, color } = placeItem;
 
-        const placeElement = this.seatingChart.querySelector(
+        let placeElement = this.seatingChart.querySelector(
           `.js-place-wrapper[data-sector="${sector}"][data-place="${place}"][data-row="${row}"]`,
         );
+
+        if (place === "dancefloor") {
+          placeElement = this.seatingChart.querySelector(
+            `.js-place-dancefloor[data-sector="${sector}"][data-place="${place}"][data-row="${row}"]`,
+          );
+        }
 
         if (!placeElement) {
           return;
@@ -524,7 +538,8 @@ ready(function () {
     // выбор места
 
     updateResultText(textContainer, data) {
-      const ticketsAmount = data.length;
+      const dancefloorAmount = this.dancefloorPlaceAmount ? this.dancefloorPlaceAmount - 1 : 0;
+      const ticketsAmount = data.length + dancefloorAmount;
       const totalPrice = data.reduce((acc, item) => {
         return acc + Number(item.price);
       }, 0);
@@ -571,6 +586,14 @@ ready(function () {
       this.resultsBlock.classList.add("hidden");
     }
 
+    showResultCards() {
+      this.resultCardsContainer.classList.remove("hidden");
+    }
+
+    hideResulttCards() {
+      this.resultCardsContainer.classList.add("hidden");
+    }
+
     highlightChosenPlace(element) {
       element.classList.add("added");
     }
@@ -596,42 +619,62 @@ ready(function () {
       this.resultCardsContainer.appendChild(resultCard);
       this.updateResultText(this.resultText, this.chosenPlaces);
 
-      this.chosenPlaces.length ? this.showResultPanel() : this.hideResultPanel();
+      this.chosenPlaces.length
+        ? (this.showResultPanel(), this.showResultCards())
+        : (this.hideResultPanel(), this.hideResultCards());
       // this.addScrollPadding();
+    }
+
+    showDancefloorPanel() {
+      this.dancefloorPlaceCounter.classList.remove("hidden");
+    }
+    hideDancefloorPanel() {
+      this.dancefloorPlaceCounter.classList.add("hidden");
+    }
+
+    handleDancefloorHide() {
+      this.chosenPlaces = this.chosenPlaces.filter((item) => {
+        return item.place !== "dancefloor";
+      });
+      this.hideDancefloorPanel();
     }
 
     handleDancefloorClick() {
       if (this.dancefloorPlace.classList.contains("added")) {
-        // const { place, sector } = this.dancefloorPlace.dataset;
-        // const cardElement = this.resultCardsContainer.querySelector(
-        //   `.js-result-card[data-sector="${sector}"][data-place="${place}"]`,
-        // );
+        this.handleDancefloorHide();
+        this.hideDancefloorPanel();
+        this.dancefloorPlace.classList.remove("added");
+        this.updateResultText(this.resultText, this.chosenPlaces);
+        this.resetCounter();
+        if (!this.chosenPlaces.length) {
+          this.hideResultPanel();
+        }
 
-        // this.handleRemoveCard(cardElement, this.dancefloorPlace);
         return;
       }
+
+      this.dancefloorPlace.classList.add("added");
+
       this.dancefloorPlaceAmount = 1;
-      this.highlightChosenPlace(this.dancefloorPlace);
       const uniqueID = Date.now();
 
-      // const placeModel = {
-      //   sector: "",
-      //   row: "",
-      //   place: "dancefloor",
-      //   price: "5000",
-      //   ticketNumber: "1243",
-      //   id: 1723817925348,
-      // };
+      this.chosenPlaces.push({
+        ...this.dancefloorPlace.dataset,
+        dancefloorPrice: this.dancefloorPlace.dataset.price,
+        id: uniqueID,
+      });
+      this.showDancefloorPanel();
 
-      // const resultCard = this.generateResultCard(this.dancefloorPlace.dataset, uniqueID);
-      this.chosenPlaces.push({ ...this.dancefloorPlace.dataset, id: uniqueID });
-      console.log("this.chosenPlaces", this.chosenPlaces);
-
-      // this.resultCardsContainer.appendChild(resultCard);
       this.updateResultText(this.resultText, this.chosenPlaces);
 
-      this.chosenPlaces.length ? this.showResultPanel() : this.hideResultPanel();
-      // this.addScrollPadding();
+      this.chosenPlaces.length
+        ? (this.showResultPanel(), this.showDancefloorPanel())
+        : (this.hideResultPanel(), this.hideDancefloorPanel());
+    }
+
+    resetCounter() {
+      this.dancefloorPlaceAmount = 0;
+      this.dancefloorPlaceCounter.querySelector(".js-seats-counter-input").value = 1;
     }
 
     initDancefloorPlaceCounter() {
@@ -653,17 +696,14 @@ ready(function () {
       });
 
       const updateDancefloorTickets = (value) => {
-        // обновить текст кнопки
         const dancefloorObj = this.chosenPlaces.find((item) => {
           return item.place === "dancefloor";
         });
-        dancefloorObj.price = Number(dancefloorObj.price) * this.dancefloorPlaceAmount;
+
+        console.log("dancefloorObj", dancefloorObj);
+        dancefloorObj.price = Number(dancefloorObj.dancefloorPrice) * this.dancefloorPlaceAmount;
         this.updateResultText(this.resultText, this.chosenPlaces);
       };
-
-      const removeCounter = () => {};
-
-      const removeDancefloorTickets = () => {};
 
       const handleItemIncrease = () => {
         this.dancefloorPlaceAmount += 1;
@@ -677,8 +717,11 @@ ready(function () {
           counterInput.value = this.dancefloorPlaceAmount;
           updateDancefloorTickets(this.dancefloorPlaceAmount);
         } else {
-          removeCounter();
-          removeDancefloorTickets();
+          this.resetCounter();
+          this.handleDancefloorHide();
+          if (!this.chosenPlaces.length) {
+            this.hideResultPanel();
+          }
         }
       };
     }

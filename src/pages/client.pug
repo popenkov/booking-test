@@ -16,7 +16,7 @@ block content
         +loader(class="seats__loader js-loader hidden")
         .session-widget-client__inner.js-seats-container(style="transform: matrix(1, 0, 0, 1, 0, 0)")
           .session-widget-client__dancefloor
-            .client-place.client-place--dancefloor.js-place-dancefloor(draggable='false' style="color: #9013FE;" data-sector='1' data-place='dancefloor' data-price='2000' data-ticket-number='dancefloor'  data-ticket-link='/ticket-link')
+            .client-place.client-place--dancefloor.js-place-dancefloor(draggable='false'  data-sector='1' data-row="dancefloor" data-place='dancefloor' data-price='2000' data-ticket-number='dancefloor'  data-ticket-link='/ticket-link')
               svg.client-place__svg.js-place( draggable='false' viewbox='0 0 20 20')
                 g
                   circle.client-place__svg-place(cx='10' cy='10' r='5' fill='currentColor')
@@ -197,15 +197,15 @@ block content
                       circle.client-place__svg-place(cx='10' cy='10' r='5' fill='currentColor')
                       circle.client-place__svg-hole(cx='10' cy='10' r='3' fill='currentColor' draggable='false')
               span.session-widget-client__row-name(draggable='false') 1
-      //- todo .hidden
-      .session-widget-client__result.js-results-block
-        .session-widget-client__result-cards.js-result-cards
+      //- todo
+      .session-widget-client__result.js-results-block.hidden
+        .session-widget-client__result-cards.js-result-cards.hidden
 
-        .session-widget-client__dancefloor-counter.seats-counter
+        .session-widget-client__dancefloor-counter.seats-counter.js-seats-counter.hidden
           .seats-counter__text
             span.seats-counter__title Танцпол
             span.seats-counter__value 2 000 ₽
-          .seats-counter__input-wrapper.js-seats-counter
+          .seats-counter__input-wrapper
             button.seats-counter__input-button.js-seats-counter-decrement(type="button") -
             input.seats-counter__input.js-seats-counter-input(type="number" readonly value='1')
             button.seats-counter__input-button.js-seats-counter-increment(type="button") +

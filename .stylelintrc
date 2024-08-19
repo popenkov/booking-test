@@ -27,6 +27,7 @@
         "/^while/"
       ]
     }],
+    "media-feature-range-notation": "prefix",
     "function-no-unknown": null,
     "import-notation": "string",
     "media-query-no-invalid": null,
