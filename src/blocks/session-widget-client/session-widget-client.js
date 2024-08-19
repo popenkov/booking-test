@@ -232,6 +232,12 @@ ready(function () {
       this.TOP_PADDING = 20;
       this.PLACE_RADIUS = 10;
 
+      this.choosePlaceWindow = this.form.querySelector(".js-client-choose-place");
+      this.confirmPlaceWindow = this.form.querySelector(".js-tickets-confirmation");
+      this.choosePlaceSubmitButton = this.form.querySelector(".js-to-confirmation-button");
+      this.backToPLaceChooseButton = this.form.querySelector(".js-back-to-place-choose-button");
+      this.submitButton = this.form.querySelector(".js-submit-client-form");
+
       this.isGrabbing = false;
       this.plusBtn = this.form.querySelector(".js-plus-button");
       this.minusBtn = this.form.querySelector(".js-minus-button");
@@ -244,7 +250,7 @@ ready(function () {
       this.filterButtonsContainer = this.form.querySelector(".js-filters-container");
       this.resultsBlock = this.form.querySelector(".js-results-block");
       this.resultText = this.form.querySelector(".js-result-text");
-      this.submitButton = this.form.querySelector(".js-submit-button");
+
       this.dancefloorPlace = this.form.querySelector(".js-place-dancefloor");
       this.dancefloorPlaceCounter = this.form.querySelector(".js-seats-counter");
 
@@ -292,9 +298,28 @@ ready(function () {
           this.handleRemoveCard(resultCard);
         }
       });
-      this.submitButton.addEventListener("click", this.handleFormSubmit.bind(this));
+      this.submitButton?.addEventListener("click", this.handleFormSubmit.bind(this));
+
+      this.choosePlaceSubmitButton.addEventListener(
+        "click",
+        this.handlePlaceConfirmationOpen.bind(this),
+      );
+
+      this.backToPLaceChooseButton.addEventListener("click", this.handlePlaceChooseOpen.bind(this));
 
       this.showTooltipOnHover(this.places);
+    }
+
+    // переключением между окнами
+    handlePlaceConfirmationOpen() {
+      console.log("handlePlaceConfirmationOpen");
+      this.choosePlaceWindow.classList.add("hidden");
+      this.confirmPlaceWindow.classList.remove("hidden");
+    }
+
+    handlePlaceChooseOpen() {
+      this.choosePlaceWindow.classList.remove("hidden");
+      this.confirmPlaceWindow.classList.add("hidden");
     }
 
     //  управление картой зала\
