@@ -156,7 +156,8 @@ export const config = {
   // style imports at end
   addStyleAfter: ["src/blocks/tooltip/tooltip.scss",
     // "src/blocks/filter-button/filter-button.scss",
-    "src/blocks/result-card/result-card.scss","src/blocks/confirmation/confirmation.scss",
+    "src/blocks/result-card/result-card.scss",
+    // "src/blocks/confirmation/confirmation.scss",
     // "src/blocks/confirmation/confirmation.scss","src/blocks/client-payment-success/client-payment-success.scss"
   ],
   // js imports at start

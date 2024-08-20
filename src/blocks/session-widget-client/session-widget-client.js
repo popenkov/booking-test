@@ -226,7 +226,7 @@ ready(function () {
 
       this.availablePlaces = [];
       this.chosenPlaces = [];
-      // this.dancefloorPlaceAmount = 0;
+      this.dancefloorPlaceAmount = 0;
 
       this.LEFT_PADDING = 20;
       this.TOP_PADDING = 20;
@@ -313,7 +313,6 @@ ready(function () {
 
     // переключением между окнами
     handlePlaceConfirmationOpen() {
-      console.log("handlePlaceConfirmationOpen");
       this.choosePlaceWindow.classList.add("hidden");
       this.confirmPlaceWindow.classList.remove("hidden");
       this.updateChosenTicketsToConfirm();
@@ -473,7 +472,7 @@ ready(function () {
     }
 
     updateSeatsData(data) {
-      this.resetPlacesData(this.places);
+      this.resetPlacesData([...this.places, this.dancefloorPlace]);
       data.forEach((placeItem) => {
         const { sector, place, row, price, color } = placeItem;
 
@@ -508,9 +507,15 @@ ready(function () {
         notSelectedPlaces.forEach((placeItem) => {
           const { sector, place, row, color } = placeItem;
 
-          const placeElement = this.seatingChart.querySelector(
+          let placeElement = this.seatingChart.querySelector(
             `.js-place-wrapper[data-sector="${sector}"][data-place="${place}"][data-row="${row}"]`,
           );
+
+          if (place === "dancefloor") {
+            placeElement = this.seatingChart.querySelector(
+              `.js-place-dancefloor[data-sector="${sector}"][data-place="${place}"][data-row="${row}"]`,
+            );
+          }
 
           if (!placeElement) {
             return;
@@ -713,8 +718,6 @@ ready(function () {
       );
       const counterInput = this.dancefloorPlaceCounter.querySelector(".js-seats-counter-input");
 
-      console.log("incrementButton", incrementButton);
-
       incrementButton.addEventListener("click", () => {
         handleItemIncrease();
       });
@@ -722,12 +725,11 @@ ready(function () {
         handleItemDecrease();
       });
 
-      const updateDancefloorTickets = (value) => {
+      const updateDancefloorTickets = () => {
         const dancefloorObj = this.chosenPlaces.find((item) => {
           return item.place === "dancefloor";
         });
 
-        console.log("dancefloorObj", dancefloorObj);
         dancefloorObj.price = Number(dancefloorObj.dancefloorPrice) * this.dancefloorPlaceAmount;
         this.updateResultText(this.resultText, this.chosenPlaces);
       };
@@ -873,8 +875,13 @@ ready(function () {
 
     // подтверждение места
     getTicketMarkup(data) {
-      const { price, row, sector, place } = data;
+      const { price, row, sector, place, dancefloorPrice } = data;
       const formattedPrice = this.formatPrice(price);
+
+      if (place === "dancefloor") {
+        return `<li class="confirmation__tickets-item confirmation-ticket"><span class="confirmation-ticket__place">Танцпол</span><span class="confirmation-ticket__price">${this.dancefloorPlaceAmount} x ${dancefloorPrice}: ${formattedPrice}</span>
+        </li>`;
+      }
       return `<li class="confirmation__tickets-item confirmation-ticket"><span class="confirmation-ticket__place">${row} ряд, ${place}
               место, сектор ${sector}</span><span class="confirmation-ticket__price">${formattedPrice}</span>
         </li>`;
@@ -890,7 +897,6 @@ ready(function () {
 
     // отправка формы
     async handleFormSubmit() {
-      console.log("this.submitButton", this.submitButton);
       this.submitButton.setAttribute("disabled", true);
       this.availablePlaces = this.removeArrDuplicates(this.availablePlaces, this.chosenPlaces);
       this.showLoader(this.seatingChart, this.loader);

@@ -75,4 +75,13 @@
       r: 10;
     }
   }
+
+  &.client-place--dancefloor.inactive {
+    opacity: 0.1;
+    pointer-events: none;
+
+    .client-place__svg-place {
+      r: 10;
+    }
+  }
 }
