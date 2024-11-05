@@ -24,7 +24,8 @@
     "build": "cross-env MODE=production gulp build",
     "clear": "gulp dev:clear",
     "lint-staged": "lint-staged",
-    "deploy": "cross-env MODE=deploy gulp deploy"
+    "deploy": "cross-env MODE=deploy gulp deploy",
+    "schemeMapper": "node schemeMapper.js "
   },
   "lint-staged": {
     "*.{js,pug,md}": "editorconfig-cli",
@@ -97,8 +98,15 @@
   },
   "dependencies": {
     "autosize": "^6.0.1",
+    "cheerio": "^1.0.0",
     "imask": "^7.4.0",
-    "sanitize.css": "^13.0.0"
+    "js2svg": "^1.5.4",
+    "jsdom": "^25.0.1",
+    "sanitize.css": "^13.0.0",
+    "svg-parser": "^2.0.4",
+    "svgjs": "^2.6.2",
+    "xml2js": "^0.6.2",
+    "xmldom": "^0.6.0"
   },
   "husky": {
     "hooks": {

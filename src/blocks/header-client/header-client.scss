@@ -1,8 +1,6 @@
 @use "../../scss/breakpoints";
 
 .header-client {
-  $block-name: &; // #{$block-name}__element
-
   padding: 11px 22px;
   color: #fff;
   background-color: #00bcd5;
